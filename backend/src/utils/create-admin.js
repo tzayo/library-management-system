@@ -4,6 +4,41 @@ import { connectDB } from '../config/database.js';
 
 dotenv.config();
 
+// Function to wait for a specified duration
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Function to retry database connection with exponential backoff
+const connectWithRetry = async (maxRetries = 5, baseDelay = 2000) => {
+  let lastError;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`📡 Connecting to database (attempt ${attempt}/${maxRetries})...`);
+      const connected = await connectDB();
+
+      if (connected) {
+        return true;
+      }
+
+      lastError = new Error('Connection returned false');
+    } catch (error) {
+      lastError = error;
+    }
+
+    if (attempt < maxRetries) {
+      const delay = baseDelay * Math.pow(2, attempt - 1);
+      console.log(`⏳ Database not ready. Retrying in ${delay/1000} seconds...`);
+      await sleep(delay);
+    }
+  }
+
+  console.error('❌ Failed to connect to database after multiple attempts');
+  if (lastError) {
+    console.error(`   Last error: ${lastError.message}`);
+  }
+  return false;
+};
+
 // Parse command line arguments
 const args = process.argv.slice(2);
 const getArgValue = (argName) => {
@@ -47,12 +82,14 @@ const createAdmin = async () => {
       process.exit(1);
     }
 
-    // Connect to database
-    console.log('📡 Connecting to database...');
-    const connected = await connectDB();
+    // Connect to database with retry logic
+    const connected = await connectWithRetry();
 
     if (!connected) {
-      console.error('❌ Failed to connect to database\n');
+      console.error('❌ Unable to connect to database. Please ensure:');
+      console.error('   1. The database container is running: docker-compose ps');
+      console.error('   2. Database environment variables are correctly set');
+      console.error('   3. You are running this from inside Docker or the database is accessible\n');
       process.exit(1);
     }
 

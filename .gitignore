@@ -28,6 +28,9 @@ Thumbs.db
 # Database
 *.sqlite
 *.db
+*.sql.backup
+backup_*.sql
+pgdata/
 
 # Docker
 docker-compose.override.yml

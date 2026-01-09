@@ -52,6 +52,12 @@
 - Docker + Docker Compose
 - PostgreSQL (Database)
 
+## 📚 Documentation
+
+- 📖 [Complete Reinstall Guide](REINSTALL-GUIDE.md) - Clean install and reset procedures
+- 🗄️ [Database Guide](DATABASE-GUIDE.md) - Database inspection, backup, and management
+- 🔧 [Troubleshooting Guide](TROUBLESHOOTING.md) - Common issues and solutions
+
 ## 📋 דרישות מקדימות
 
 - Node.js 20+

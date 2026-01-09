@@ -60,6 +60,12 @@
 
 ## 🚀 התקנה והרצה
 
+> **💡 טיפ:** לפני שמתחילים, אפשר להריץ בדיקת תקינות:
+> ```bash
+> cd backend && npm install && npm run check
+> ```
+> זה יבדוק שכל הדרישות מקדימות מסודרות ויציע פתרונות אם יש בעיות.
+
 ### שיטה 1: Docker (מומלץ)
 
 1. **Clone הפרויקט:**
@@ -118,16 +124,40 @@ docker exec -it library_backend npm run create-admin -- --email=admin@library.co
 
 ### שיטה 2: ללא Docker (פיתוח)
 
+**חשוב:** שיטה זו דורשת PostgreSQL מותקן ורץ על המחשב המקומי.
+
 #### Backend
 
-1. **התקנת PostgreSQL והגדרת Database**
+1. **התקנת PostgreSQL והגדרת Database:**
+   ```bash
+   # Ubuntu/Debian
+   sudo apt install postgresql
+   sudo systemctl start postgresql
+
+   # macOS
+   brew install postgresql@15
+   brew services start postgresql@15
+
+   # יצירת Database ומשתמש
+   sudo -u postgres psql
+   CREATE DATABASE library_system;
+   CREATE USER library_user WITH PASSWORD 'library_password';
+   GRANT ALL PRIVILEGES ON DATABASE library_system TO library_user;
+   \q
+   ```
 
 2. **התקנת dependencies והרצה:**
 ```bash
 cd backend
 npm install
 cp .env.example .env
-# ערוך את .env עם הפרטים שלך
+# ערוך את .env - וודא ש-DB_HOST=localhost
+nano .env  # או כל עורך טקסט
+
+# בדוק שהכל תקין
+npm run check
+
+# הרץ את השרת
 npm run dev
 ```
 
@@ -226,7 +256,55 @@ library-management-system/
 - 📧 **למי:** משתמשים עם ספרים שיש להחזיר בעוד 7 ימים או פחות
 - 🔄 **תדירות:** פעם אחת בלבד לכל השאלה
 
+## 🔧 פתרון בעיות
+
+אם נתקלת בבעיות, ראה את [מדריך פתרון הבעיות](TROUBLESHOOTING.md) המפורט.
+
+### בעיות נפוצות
+
+#### שגיאה: `getaddrinfo ENOTFOUND db`
+
+המערכת מנסה להתחבר לכתובת "db" שקיימת רק ב-Docker.
+
+**פתרון מהיר:**
+```bash
+# אופציה 1: השתמש ב-Docker
+docker-compose up -d
+
+# אופציה 2: תקן את הקונפיגורציה
+cd backend
+nano .env  # שנה DB_HOST=localhost
+```
+
+#### שגיאה: `ECONNREFUSED`
+
+PostgreSQL לא רץ או לא נגיש.
+
+**פתרון:**
+```bash
+# בדוק אם PostgreSQL רץ
+nc -zv localhost 5432
+
+# אם לא רץ, התחל אותו
+sudo service postgresql start  # Ubuntu/Debian
+brew services start postgresql # macOS
+
+# או השתמש ב-Docker
+docker-compose up -d
+```
+
+לפרטים נוספים ופתרונות לבעיות נוספות, ראה [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+
 ## 📝 פקודות שימושיות
+
+### כלליות
+```bash
+# בדיקת תקינות מערכת
+cd backend && npm run check
+
+# בדיקת חיבוריות מקיפה
+./check-connectivity.sh
+```
 
 ### Docker
 ```bash
@@ -245,6 +323,9 @@ docker-compose up -d --build
 
 ### Backend
 ```bash
+# בדיקת תקינות מערכת
+npm run check
+
 # יצירת Admin
 npm run create-admin -- --email=admin@example.com --password=Pass123! --name="Admin"
 

@@ -12,7 +12,7 @@ const Book = sequelize.define('Book', {
     allowNull: false,
     validate: {
       notEmpty: {
-        msg: 'כותרת הספר היא שדה חובה'
+        msg: '\u200Fכותרת הספר היא שדה חובה\u200F'
       }
     }
   },
@@ -34,7 +34,7 @@ const Book = sequelize.define('Book', {
   category: {
     type: DataTypes.STRING,
     allowNull: true,
-    defaultValue: 'כללי'
+    defaultValue: '\u200Fכללי\u200F'
   },
   description: {
     type: DataTypes.TEXT,
@@ -45,7 +45,7 @@ const Book = sequelize.define('Book', {
     allowNull: true,
     validate: {
       isUrl: {
-        msg: 'כתובת התמונה חייבת להיות URL תקין'
+        msg: '\u200Fכתובת התמונה חייבת להיות URL תקין\u200F'
       }
     }
   },
@@ -56,10 +56,10 @@ const Book = sequelize.define('Book', {
     validate: {
       min: {
         args: 0,
-        msg: 'כמות כוללת לא יכולה להיות שלילית'
+        msg: '\u200Fכמות כוללת לא יכולה להיות שלילית\u200F'
       },
       isInt: {
-        msg: 'כמות כוללת חייבת להיות מספר שלם'
+        msg: '\u200Fכמות כוללת חייבת להיות מספר שלם\u200F'
       }
     }
   },
@@ -70,10 +70,10 @@ const Book = sequelize.define('Book', {
     validate: {
       min: {
         args: 0,
-        msg: 'כמות זמינה לא יכולה להיות שלילית'
+        msg: '\u200Fכמות זמינה לא יכולה להיות שלילית\u200F'
       },
       isInt: {
-        msg: 'כמות זמינה חייבת להיות מספר שלם'
+        msg: '\u200Fכמות זמינה חייבת להיות מספר שלם\u200F'
       }
     }
   },
@@ -114,7 +114,7 @@ Book.prototype.addCopies = async function(quantity) {
 
 Book.prototype.borrowCopy = async function() {
   if (this.quantityAvailable <= 0) {
-    throw new Error('אין עותקים זמינים של ספר זה');
+    throw new Error('\u200Fאין עותקים זמינים של ספר זה\u200F');
   }
   this.quantityAvailable -= 1;
   await this.save();
@@ -123,7 +123,7 @@ Book.prototype.borrowCopy = async function() {
 
 Book.prototype.returnCopy = async function() {
   if (this.quantityAvailable >= this.quantityTotal) {
-    throw new Error('כל העותקים כבר זמינים');
+    throw new Error('\u200Fכל העותקים כבר זמינים\u200F');
   }
   this.quantityAvailable += 1;
   await this.save();

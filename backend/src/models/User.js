@@ -14,7 +14,7 @@ const User = sequelize.define('User', {
     unique: true,
     validate: {
       isEmail: {
-        msg: 'כתובת אימייל לא תקינה'
+        msg: '\u200Fכתובת אימייל לא תקינה\u200F'
       }
     }
   },
@@ -24,7 +24,7 @@ const User = sequelize.define('User', {
     validate: {
       len: {
         args: [8, 100],
-        msg: 'הסיסמה חייבת להכיל לפחות 8 תווים'
+        msg: '\u200Fהסיסמה חייבת להכיל לפחות 8 תווים\u200F'
       }
     }
   },
@@ -33,7 +33,7 @@ const User = sequelize.define('User', {
     allowNull: false,
     validate: {
       notEmpty: {
-        msg: 'שם מלא הוא שדה חובה'
+        msg: '\u200Fשם מלא הוא שדה חובה\u200F'
       }
     }
   },
@@ -43,7 +43,7 @@ const User = sequelize.define('User', {
     validate: {
       is: {
         args: /^[\d\-\+\(\)\s]*$/,
-        msg: 'מספר טלפון לא תקין'
+        msg: '\u200Fמספר טלפון לא תקין\u200F'
       }
     }
   },

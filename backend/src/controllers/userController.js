@@ -82,7 +82,7 @@ export const getAllUsers = async (req, res) => {
     console.error('Get all users error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בטעינת רשימת המשתמשים',
+      message: '\u200Fשגיאה בטעינת רשימת המשתמשים\u200F',
       error: error.message
     });
   }
@@ -104,7 +104,7 @@ export const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'משתמש לא נמצא'
+        message: '\u200Fמשתמש לא נמצא\u200F'
       });
     }
 
@@ -157,7 +157,7 @@ export const getUserById = async (req, res) => {
     console.error('Get user by ID error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בטעינת פרטי המשתמש',
+      message: '\u200Fשגיאה בטעינת פרטי המשתמש\u200F',
       error: error.message
     });
   }
@@ -176,7 +176,7 @@ export const updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'משתמש לא נמצא'
+        message: '\u200Fמשתמש לא נמצא\u200F'
       });
     }
 
@@ -184,7 +184,7 @@ export const updateUser = async (req, res) => {
     if (id === req.user.id && isActive === false) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן להשבית את החשבון שלך'
+        message: '\u200Fלא ניתן להשבית את החשבון שלך\u200F'
       });
     }
 
@@ -192,7 +192,7 @@ export const updateUser = async (req, res) => {
     if (id === req.user.id && role && role !== user.role) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן לשנות את התפקיד שלך'
+        message: '\u200Fלא ניתן לשנות את התפקיד שלך\u200F'
       });
     }
 
@@ -202,7 +202,7 @@ export const updateUser = async (req, res) => {
       if (existingUser) {
         return res.status(400).json({
           success: false,
-          message: 'אימייל זה כבר קיים במערכת'
+          message: '\u200Fאימייל זה כבר קיים במערכת\u200F'
         });
       }
     }
@@ -218,7 +218,7 @@ export const updateUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'פרטי המשתמש עודכנו בהצלחה',
+      message: '\u200Fפרטי המשתמש עודכנו בהצלחה\u200F',
       data: {
         user: user.toSafeObject()
       }
@@ -227,7 +227,7 @@ export const updateUser = async (req, res) => {
     console.error('Update user error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בעדכון פרטי משתמש',
+      message: '\u200Fשגיאה בעדכון פרטי משתמש\u200F',
       error: error.message
     });
   }
@@ -245,7 +245,7 @@ export const deleteUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'משתמש לא נמצא'
+        message: '\u200Fמשתמש לא נמצא\u200F'
       });
     }
 
@@ -253,7 +253,7 @@ export const deleteUser = async (req, res) => {
     if (id === req.user.id) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן למחוק את החשבון שלך'
+        message: '\u200Fלא ניתן למחוק את החשבון שלך\u200F'
       });
     }
 
@@ -268,7 +268,7 @@ export const deleteUser = async (req, res) => {
     if (activeLoans > 0) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן למחוק משתמש עם השאלות פעילות'
+        message: '\u200Fלא ניתן למחוק משתמש עם השאלות פעילות\u200F'
       });
     }
 
@@ -276,13 +276,13 @@ export const deleteUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'המשתמש נמחק בהצלחה'
+      message: '\u200Fהמשתמש נמחק בהצלחה\u200F'
     });
   } catch (error) {
     console.error('Delete user error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה במחיקת משתמש',
+      message: '\u200Fשגיאה במחיקת משתמש\u200F',
       error: error.message
     });
   }
@@ -300,7 +300,7 @@ export const toggleUserActive = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'משתמש לא נמצא'
+        message: '\u200Fמשתמש לא נמצא\u200F'
       });
     }
 
@@ -308,7 +308,7 @@ export const toggleUserActive = async (req, res) => {
     if (id === req.user.id) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן להשבית את החשבון שלך'
+        message: '\u200Fלא ניתן להשבית את החשבון שלך\u200F'
       });
     }
 
@@ -324,7 +324,7 @@ export const toggleUserActive = async (req, res) => {
       if (activeLoans > 0) {
         return res.status(400).json({
           success: false,
-          message: 'לא ניתן להשבית משתמש עם השאלות פעילות'
+          message: '\u200Fלא ניתן להשבית משתמש עם השאלות פעילות\u200F'
         });
       }
     }
@@ -343,7 +343,7 @@ export const toggleUserActive = async (req, res) => {
     console.error('Toggle user active error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בשינוי סטטוס משתמש',
+      message: '\u200Fשגיאה בשינוי סטטוס משתמש\u200F',
       error: error.message
     });
   }
@@ -360,7 +360,7 @@ export const changeUserRole = async (req, res) => {
     if (!['user', 'editor', 'admin'].includes(role)) {
       return res.status(400).json({
         success: false,
-        message: 'תפקיד לא תקין'
+        message: '\u200Fתפקיד לא תקין\u200F'
       });
     }
 
@@ -369,7 +369,7 @@ export const changeUserRole = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'משתמש לא נמצא'
+        message: '\u200Fמשתמש לא נמצא\u200F'
       });
     }
 
@@ -377,7 +377,7 @@ export const changeUserRole = async (req, res) => {
     if (id === req.user.id) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן לשנות את התפקיד שלך'
+        message: '\u200Fלא ניתן לשנות את התפקיד שלך\u200F'
       });
     }
 
@@ -386,7 +386,7 @@ export const changeUserRole = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'תפקיד המשתמש עודכן בהצלחה',
+      message: '\u200Fתפקיד המשתמש עודכן בהצלחה\u200F',
       data: {
         user: user.toSafeObject()
       }
@@ -395,7 +395,7 @@ export const changeUserRole = async (req, res) => {
     console.error('Change user role error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בשינוי תפקיד משתמש',
+      message: '\u200Fשגיאה בשינוי תפקיד משתמש\u200F',
       error: error.message
     });
   }
@@ -436,7 +436,7 @@ export const getUserStats = async (req, res) => {
     console.error('Get user stats error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בטעינת סטטיסטיקות משתמשים',
+      message: '\u200Fשגיאה בטעינת סטטיסטיקות משתמשים\u200F',
       error: error.message
     });
   }

@@ -11,7 +11,7 @@ export const authenticate = async (req, res, next) => {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
         success: false,
-        message: 'אין הרשאת גישה. נא להתחבר למערכת.'
+        message: '\u200Fאין הרשאת גישה. נא להתחבר למערכת.\u200F'
       });
     }
 
@@ -26,14 +26,14 @@ export const authenticate = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'משתמש לא נמצא'
+        message: '\u200Fמשתמש לא נמצא\u200F'
       });
     }
 
     if (!user.isActive) {
       return res.status(403).json({
         success: false,
-        message: 'חשבון המשתמש אינו פעיל'
+        message: '\u200Fחשבון המשתמש אינו פעיל\u200F'
       });
     }
 
@@ -44,20 +44,20 @@ export const authenticate = async (req, res, next) => {
     if (error.name === 'JsonWebTokenError') {
       return res.status(401).json({
         success: false,
-        message: 'טוקן לא תקין'
+        message: '\u200Fטוקן לא תקין\u200F'
       });
     }
 
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({
         success: false,
-        message: 'טוקן פג תוקף. נא להתחבר מחדש.'
+        message: '\u200Fטוקן פג תוקף. נא להתחבר מחדש.\u200F'
       });
     }
 
     return res.status(500).json({
       success: false,
-      message: 'שגיאת שרת',
+      message: '\u200Fשגיאת שרת\u200F',
       error: error.message
     });
   }
@@ -69,14 +69,14 @@ export const authorize = (...allowedRoles) => {
     if (!req.user) {
       return res.status(401).json({
         success: false,
-        message: 'נא להתחבר למערכת'
+        message: '\u200Fנא להתחבר למערכת\u200F'
       });
     }
 
     if (!allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        message: 'אין לך הרשאה לבצע פעולה זו',
+        message: '\u200Fאין לך הרשאה לבצע פעולה זו\u200F',
         requiredRoles: allowedRoles,
         yourRole: req.user.role
       });

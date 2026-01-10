@@ -66,11 +66,11 @@ const sendEmail = async ({ to, subject, html, text }) => {
 // Email templates
 
 export const sendWelcomeEmail = async (user) => {
-  const subject = '\u200Fברוכים הבאים לספריית הקיבוץ\u200F';
+  const subject = 'Welcome to the Library';
 
   const html = `
     <!DOCTYPE html>
-    <html dir="rtl" lang="he">
+    <html dir="ltr" lang="en">
     <head>
       <meta charset="UTF-8">
       <style>
@@ -85,26 +85,26 @@ export const sendWelcomeEmail = async (user) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>📚 ברוכים הבאים לספריית הקיבוץ</h1>
+          <h1>📚 Welcome to the Library</h1>
         </div>
         <div class="content">
-          <h2>שלום ${user.fullName},</h2>
-          <p>אנחנו שמחים שהצטרפת למערכת ניהול ספריית הקיבוץ!</p>
-          <p>כעת תוכל:</p>
+          <h2>Hello ${user.fullName},</h2>
+          <p>We're happy you've joined the Library Management System!</p>
+          <p>You can now:</p>
           <ul>
-            <li>לצפות בקטלוג הספרים המלא</li>
-            <li>לחפש ספרים לפי שם, סופר או קטגוריה</li>
-            <li>לבדוק זמינות ספרים</li>
-            <li>לעקוב אחר ההשאלות שלך</li>
+            <li>View the complete book catalog</li>
+            <li>Search books by name, author, or category</li>
+            <li>Check book availability</li>
+            <li>Track your loans</li>
           </ul>
-          <p>על מנת לשאול ספרים, פנה לספרן/ית במהלך שעות פתיחת הספרייה.</p>
+          <p>To borrow books, please contact the librarian during library opening hours.</p>
           <div style="text-align: center;">
-            <a href="${config.frontendUrl}/login" class="button">כניסה למערכת</a>
+            <a href="${config.frontendUrl}/login" class="button">Login to System</a>
           </div>
         </div>
         <div class="footer">
-          <p>מערכת ניהול ספריית הקיבוץ</p>
-          <p>אימייל זה נשלח אוטומטית, אין להשיב.</p>
+          <p>Library Management System</p>
+          <p>This email was sent automatically, please do not reply.</p>
         </div>
       </div>
     </body>
@@ -112,19 +112,19 @@ export const sendWelcomeEmail = async (user) => {
   `;
 
   const text = `
-שלום ${user.fullName},
+Hello ${user.fullName},
 
-אנחנו שמחים שהצטרפת למערכת ניהול ספריית הקיבוץ!
+We're happy you've joined the Library Management System!
 
-כעת תוכל:
-- לצפות בקטלוג הספרים המלא
-- לחפש ספרים לפי שם, סופר או קטגוריה
-- לבדוק זמינות ספרים
-- לעקוב אחר ההשאלות שלך
+You can now:
+- View the complete book catalog
+- Search books by name, author, or category
+- Check book availability
+- Track your loans
 
-על מנת לשאול ספרים, פנה לספרן/ית במהלך שעות פתיחת הספרייה.
+To borrow books, please contact the librarian during library opening hours.
 
-מערכת ניהול ספריית הקיבוץ
+Library Management System
   `;
 
   return await sendEmail({
@@ -140,12 +140,12 @@ export const sendLoanReminderEmail = async (loan, user, book) => {
   const isOverdue = daysUntilDue < 0;
 
   const subject = isOverdue
-    ? `⏰ איחור בהחזרת ספר - ${book.title}`
-    : `תזכורת: החזרת ספר "${book.title}"`;
+    ? `⏰ Book Return Overdue - \${book.title}`
+    : `Reminder: Return Book "\${book.title}"`;
 
   const html = `
     <!DOCTYPE html>
-    <html dir="rtl" lang="he">
+    <html dir="ltr" lang="en">
     <head>
       <meta charset="UTF-8">
       <style>
@@ -153,7 +153,7 @@ export const sendLoanReminderEmail = async (loan, user, book) => {
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { background-color: ${isOverdue ? '#E74C3C' : '#F39C12'}; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
         .content { background-color: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
-        .book-info { background-color: white; padding: 15px; border-radius: 5px; margin: 20px 0; border-right: 4px solid #4A90E2; }
+        .book-info { background-color: white; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #4A90E2; }
         .warning { color: #E74C3C; font-weight: bold; }
         .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
       </style>
@@ -161,29 +161,29 @@ export const sendLoanReminderEmail = async (loan, user, book) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>${isOverdue ? '⏰ איחור בהחזרת ספר' : '📚 תזכורת להחזרת ספר'}</h1>
+          <h1>${isOverdue ? '⏰ Book Return Overdue' : '📚 Book Return Reminder'}</h1>
         </div>
         <div class="content">
-          <h2>שלום ${user.fullName},</h2>
+          <h2>Hello \${user.fullName},</h2>
           ${isOverdue
-            ? `<p class="warning">הספר שלהלן היה אמור להיות מוחזר לפני ${Math.abs(daysUntilDue)} ימים.</p>`
-            : `<p>זוהי תזכורת שיש להחזיר את הספר שלהלן בעוד ${daysUntilDue} ימים.</p>`
+            ? `<p class="warning">The book below was due ${Math.abs(daysUntilDue)} days ago.</p>`
+            : `<p>This is a reminder that you need to return the book below in ${daysUntilDue} days ago.</p>`
           }
 
           <div class="book-info">
-            <h3>📖 פרטי הספר:</h3>
-            <p><strong>כותרת:</strong> ${book.title}</p>
-            ${book.author ? `<p><strong>סופר/ת:</strong> ${book.author}</p>` : ''}
-            <p><strong>תאריך השאלה:</strong> ${new Date(loan.borrowedAt).toLocaleDateString('he-IL')}</p>
-            <p><strong>תאריך החזרה מתוכנן:</strong> ${new Date(loan.dueDate).toLocaleDateString('he-IL')}</p>
+            <h3>📖 Book Details:</h3>
+            <p><strong>Title:</strong> ${book.title}</p>
+            ${book.author ? `<p><strong>Author:</strong> ${book.author}</p>` : ''}
+            <p><strong>Borrowed on:</strong> ${new Date(loan.borrowedAt).toLocaleDateString('en-US')}</p>
+            <p><strong>Due date:</strong> ${new Date(loan.dueDate).toLocaleDateString('en-US')}</p>
           </div>
 
-          <p>נא להחזיר את הספר לספרייה בהקדם האפשרי במהלך שעות הפתיחה.</p>
-          <p>תודה רבה!</p>
+          <p>Please return the book to the library as soon as possible during opening hours.</p>
+          <p>Thank you!</p>
         </div>
         <div class="footer">
-          <p>מערכת ניהול ספריית הקיבוץ</p>
-          <p>אימייל זה נשלח אוטומטית, אין להשיב.</p>
+          <p>Library Management System</p>
+          <p>This email was sent automatically, please do not reply.</p>
         </div>
       </div>
     </body>
@@ -191,23 +191,23 @@ export const sendLoanReminderEmail = async (loan, user, book) => {
   `;
 
   const text = `
-שלום ${user.fullName},
+Hello ${user.fullName},
 
 ${isOverdue
-  ? `הספר "${book.title}" היה אמור להיות מוחזר לפני ${Math.abs(daysUntilDue)} ימים.`
-  : `זוהי תזכורת שיש להחזיר את הספר "${book.title}" בעוד ${daysUntilDue} ימים.`
+  ? `The book "${book.title}" was due ${Math.abs(daysUntilDue)} days ago.`
+  : `This is a reminder that you need to return the book "${book.title}" in ${daysUntilDue} days.`
 }
 
-פרטי הספר:
-- כותרת: ${book.title}
-${book.author ? `- סופר/ת: ${book.author}` : ''}
-- תאריך השאלה: ${new Date(loan.borrowedAt).toLocaleDateString('he-IL')}
-- תאריך החזרה מתוכנן: ${new Date(loan.dueDate).toLocaleDateString('he-IL')}
+Book Details:
+- Title: ${book.title}
+${book.author ? `- Author: ${book.author}` : ''}
+- Borrowed on: ${new Date(loan.borrowedAt).toLocaleDateString('en-US')}
+- Due date: ${new Date(loan.dueDate).toLocaleDateString('en-US')}
 
-נא להחזיר את הספר לספרייה בהקדם האפשרי.
+Please return the book to the library as soon as possible.
 
-תודה רבה!
-מערכת ניהול ספריית הקיבוץ
+Thank you!
+Library Management System
   `;
 
   return await sendEmail({
@@ -219,23 +219,23 @@ ${book.author ? `- סופר/ת: ${book.author}` : ''}
 };
 
 export const sendBatchReminderEmail = async (user, loans) => {
-  const subject = `\u200Fתזכורת: החזרת ${loans.length} ספרים\u200F`;
+  const subject = `Reminder: Return \${loans.length} Books`;
 
   const booksListHtml = loans.map(loan => `
     <li>
       <strong>${loan.book.title}</strong>
       ${loan.book.author ? `- ${loan.book.author}` : ''}
-      (החזרה עד: ${new Date(loan.dueDate).toLocaleDateString('he-IL')})
+      (Due: ${new Date(loan.dueDate).toLocaleDateString('en-US')})
     </li>
   `).join('');
 
   const booksListText = loans.map(loan =>
-    `- ${loan.book.title}${loan.book.author ? ` - ${loan.book.author}` : ''} (החזרה עד: ${new Date(loan.dueDate).toLocaleDateString('he-IL')})`
+    `- ${loan.book.title}${loan.book.author ? ` - ${loan.book.author}` : ''} (Due: ${new Date(loan.dueDate).toLocaleDateString('en-US')})`
   ).join('\n');
 
   const html = `
     <!DOCTYPE html>
-    <html dir="rtl" lang="he">
+    <html dir="ltr" lang="en">
     <head>
       <meta charset="UTF-8">
       <style>
@@ -250,11 +250,11 @@ export const sendBatchReminderEmail = async (user, loans) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>📚 תזכורת להחזרת ספרים</h1>
+          <h1>📚 Books Return Reminder</h1>
         </div>
         <div class="content">
-          <h2>שלום ${user.fullName},</h2>
-          <p>יש לך ${loans.length} ספרים שיש להחזיר בקרוב:</p>
+          <h2>Hello \${user.fullName},</h2>
+          <p>You have \${loans.length} books that need to be returned soon:</p>
 
           <div class="books-list">
             <ul>
@@ -262,12 +262,12 @@ export const sendBatchReminderEmail = async (user, loans) => {
             </ul>
           </div>
 
-          <p>נא להחזיר את הספרים לספרייה במהלך שעות הפתיחה.</p>
-          <p>תודה רבה!</p>
+          <p>Please return the books to the library during opening hours.</p>
+          <p>Thank you!</p>
         </div>
         <div class="footer">
-          <p>מערכת ניהול ספריית הקיבוץ</p>
-          <p>אימייל זה נשלח אוטומטית, אין להשיב.</p>
+          <p>Library Management System</p>
+          <p>This email was sent automatically, please do not reply.</p>
         </div>
       </div>
     </body>
@@ -275,16 +275,16 @@ export const sendBatchReminderEmail = async (user, loans) => {
   `;
 
   const text = `
-שלום ${user.fullName},
+Hello \${user.fullName},
 
-יש לך ${loans.length} ספרים שיש להחזיר בקרוב:
+You have \${loans.length} books that need to be returned soon:
 
 ${booksListText}
 
-נא להחזיר את הספרים לספרייה במהלך שעות הפתיחה.
+Please return the books to the library during opening hours.
 
-תודה רבה!
-מערכת ניהול ספריית הקיבוץ
+Thank you!
+Library Management System
   `;
 
   return await sendEmail({

@@ -7,7 +7,7 @@ export const handleValidationErrors = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
-      message: '\u200Fשגיאות בנתונים שהוזנו\u200F',
+      message: 'Validation errors in submitted data',
       errors: errors.array().map(err => ({
         field: err.path,
         message: err.msg

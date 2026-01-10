@@ -50,7 +50,7 @@ const limiter = rateLimit({
   max: config.rateLimit.maxRequests,
   message: {
     success: false,
-    message: '\u200Fיותר מדי בקשות מכתובת זו, נסה שוב מאוחר יותר\u200F'
+    message: 'Too many requests from this IP, please try again later'
   },
   standardHeaders: true,
   legacyHeaders: false
@@ -79,7 +79,7 @@ app.use('/api/users', userRoutes);
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: '\u200Fברוכים הבאים לAPI של מערכת ניהול הספרייה\u200F',
+    message: 'Welcome to the Library Management System API',
     version: '1.0.0',
     endpoints: {
       health: '/health',
@@ -95,7 +95,7 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: '\u200Fנתיב לא נמצא\u200F'
+    message: 'Route not found'
   });
 });
 
@@ -105,7 +105,7 @@ app.use((err, req, res, next) => {
 
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'שגיאת שרת פנימית',
+    message: err.message || 'Internal server error',
     ...(config.env === 'development' && { stack: err.stack })
   });
 });

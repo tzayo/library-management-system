@@ -22,7 +22,7 @@ export const register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: '\u200Fמשתמש עם אימייל זה כבר קיים במערכת\u200F'
+        message: 'User with this email already exists'
       });
     }
 
@@ -40,7 +40,7 @@ export const register = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: '\u200Fמשתמש נרשם בהצלחה\u200F',
+      message: 'User registered successfully',
       data: {
         token,
         user: user.toSafeObject()
@@ -50,7 +50,7 @@ export const register = async (req, res) => {
     console.error('Register error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה ברישום משתמש\u200F',
+      message: 'Error registering user',
       error: error.message
     });
   }
@@ -69,7 +69,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: '\u200Fאימייל או סיסמה שגויים\u200F'
+        message: 'Invalid email or password'
       });
     }
 
@@ -77,7 +77,7 @@ export const login = async (req, res) => {
     if (!user.isActive) {
       return res.status(403).json({
         success: false,
-        message: '\u200Fחשבון המשתמש אינו פעיל. נא לפנות למנהל המערכת.\u200F'
+        message: 'User account is not active. Please contact administrator.'
       });
     }
 
@@ -87,7 +87,7 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: '\u200Fאימייל או סיסמה שגויים\u200F'
+        message: 'Invalid email or password'
       });
     }
 
@@ -96,7 +96,7 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: '\u200Fהתחברת בהצלחה\u200F',
+      message: 'Logged in successfully',
       data: {
         token,
         user: user.toSafeObject()
@@ -106,7 +106,7 @@ export const login = async (req, res) => {
     console.error('Login error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בהתחברות\u200F',
+      message: 'Error logging in',
       error: error.message
     });
   }
@@ -122,7 +122,7 @@ export const getMe = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fמשתמש לא נמצא\u200F'
+        message: 'User not found'
       });
     }
 
@@ -136,7 +136,7 @@ export const getMe = async (req, res) => {
     console.error('Get me error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בטעינת פרטי משתמש\u200F',
+      message: 'Error loading user details',
       error: error.message
     });
   }
@@ -154,7 +154,7 @@ export const updateProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fמשתמש לא נמצא\u200F'
+        message: 'User not found'
       });
     }
 
@@ -166,7 +166,7 @@ export const updateProfile = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: '\u200Fפרטי המשתמש עודכנו בהצלחה\u200F',
+      message: 'User details updated successfully',
       data: {
         user: user.toSafeObject()
       }
@@ -175,7 +175,7 @@ export const updateProfile = async (req, res) => {
     console.error('Update profile error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בעדכון פרטי משתמש\u200F',
+      message: 'Error updating user details',
       error: error.message
     });
   }
@@ -193,7 +193,7 @@ export const changePassword = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fמשתמש לא נמצא\u200F'
+        message: 'User not found'
       });
     }
 
@@ -203,7 +203,7 @@ export const changePassword = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: '\u200Fהסיסמה הנוכחית שגויה\u200F'
+        message: 'Current password is incorrect'
       });
     }
 
@@ -213,13 +213,13 @@ export const changePassword = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: '\u200Fהסיסמה שונתה בהצלחה\u200F'
+      message: 'Password changed successfully'
     });
   } catch (error) {
     console.error('Change password error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בשינוי סיסמה\u200F',
+      message: 'Error changing password',
       error: error.message
     });
   }

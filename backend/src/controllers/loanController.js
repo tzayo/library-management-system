@@ -74,7 +74,7 @@ export const getAllLoans = async (req, res) => {
     console.error('Get all loans error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בטעינת רשימת ההשאלות\u200F',
+      message: 'Error loading loans list',
       error: error.message
     });
   }
@@ -125,7 +125,7 @@ export const getMyLoans = async (req, res) => {
     console.error('Get my loans error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בטעינת ההשאלות שלך\u200F',
+      message: 'Error loading your loans',
       error: error.message
     });
   }
@@ -167,7 +167,7 @@ export const getOverdueLoans = async (req, res) => {
     console.error('Get overdue loans error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בטעינת השאלות באיחור\u200F',
+      message: 'Error loading overdue loans',
       error: error.message
     });
   }
@@ -226,7 +226,7 @@ export const getLoanStats = async (req, res) => {
     console.error('Get loan stats error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בטעינת סטטיסטיקות\u200F',
+      message: 'Error loading statistics',
       error: error.message
     });
   }
@@ -245,14 +245,14 @@ export const createLoan = async (req, res) => {
     if (!book) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fספר לא נמצא\u200F'
+        message: 'Book not found'
       });
     }
 
     if (!book.isAvailable()) {
       return res.status(400).json({
         success: false,
-        message: '\u200Fאין עותקים זמינים של ספר זה\u200F'
+        message: 'No copies available for this book'
       });
     }
 
@@ -262,14 +262,14 @@ export const createLoan = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fמשתמש לא נמצא\u200F'
+        message: 'User not found'
       });
     }
 
     if (!user.isActive) {
       return res.status(400).json({
         success: false,
-        message: '\u200Fמשתמש זה אינו פעיל\u200F'
+        message: 'This user is not active'
       });
     }
 
@@ -285,7 +285,7 @@ export const createLoan = async (req, res) => {
     if (existingLoan) {
       return res.status(400).json({
         success: false,
-        message: '\u200Fמשתמש זה כבר שאל את הספר הזה\u200F'
+        message: 'User already borrowed this book'
       });
     }
 
@@ -323,14 +323,14 @@ export const createLoan = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: '\u200Fהשאלה נרשמה בהצלחה\u200F',
+      message: 'Loan registered successfully',
       data: { loan: createdLoan }
     });
   } catch (error) {
     console.error('Create loan error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה ברישום השאלה\u200F',
+      message: 'Error registering loan',
       error: error.message
     });
   }
@@ -355,14 +355,14 @@ export const returnLoan = async (req, res) => {
     if (!loan) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fהשאלה לא נמצאה\u200F'
+        message: 'Loan not found'
       });
     }
 
     if (loan.returnedAt) {
       return res.status(400).json({
         success: false,
-        message: '\u200Fספר זה כבר הוחזר\u200F'
+        message: 'Book already returned'
       });
     }
 
@@ -390,14 +390,14 @@ export const returnLoan = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: '\u200Fהספר הוחזר בהצלחה\u200F',
+      message: 'Book returned successfully',
       data: { loan: updatedLoan }
     });
   } catch (error) {
     console.error('Return loan error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בהחזרת ספר\u200F',
+      message: 'Error returning book',
       error: error.message
     });
   }
@@ -433,7 +433,7 @@ export const getLoanById = async (req, res) => {
     if (!loan) {
       return res.status(404).json({
         success: false,
-        message: '\u200Fהשאלה לא נמצאה\u200F'
+        message: 'Loan not found'
       });
     }
 
@@ -441,7 +441,7 @@ export const getLoanById = async (req, res) => {
     if (req.user.role === 'user' && loan.userId !== req.user.id) {
       return res.status(403).json({
         success: false,
-        message: '\u200Fאין לך הרשאה לצפות בהשאלה זו\u200F'
+        message: 'You do not have permission to view this loan'
       });
     }
 
@@ -453,7 +453,7 @@ export const getLoanById = async (req, res) => {
     console.error('Get loan by ID error:', error);
     res.status(500).json({
       success: false,
-      message: '\u200Fשגיאה בטעינת פרטי ההשאלה\u200F',
+      message: 'Error loading loan details',
       error: error.message
     });
   }

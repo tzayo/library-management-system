@@ -10,7 +10,8 @@
     "check": "node src/utils/check-prerequisites.js",
     "db:migrate": "node src/utils/migrate.js",
     "db:seed": "node src/utils/seed.js",
-    "create-admin": "node src/utils/create-admin.js"
+    "create-admin": "node src/utils/create-admin.js",
+    "reset-admin": "node src/utils/reset-admin.js"
   },
   "keywords": [
     "library",

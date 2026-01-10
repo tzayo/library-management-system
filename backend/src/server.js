@@ -50,7 +50,7 @@ const limiter = rateLimit({
   max: config.rateLimit.maxRequests,
   message: {
     success: false,
-    message: 'יותר מדי בקשות מכתובת זו, נסה שוב מאוחר יותר'
+    message: '\u200Fיותר מדי בקשות מכתובת זו, נסה שוב מאוחר יותר\u200F'
   },
   standardHeaders: true,
   legacyHeaders: false
@@ -79,7 +79,7 @@ app.use('/api/users', userRoutes);
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'ברוכים הבאים לAPI של מערכת ניהול הספרייה',
+    message: '\u200Fברוכים הבאים לAPI של מערכת ניהול הספרייה\u200F',
     version: '1.0.0',
     endpoints: {
       health: '/health',
@@ -95,7 +95,7 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({
     success: false,
-    message: 'נתיב לא נמצא'
+    message: '\u200Fנתיב לא נמצא\u200F'
   });
 });
 

@@ -71,7 +71,7 @@ export const getAllBooks = async (req, res) => {
     console.error('Get all books error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בטעינת רשימת הספרים',
+      message: '\u200Fשגיאה בטעינת רשימת הספרים\u200F',
       error: error.message
     });
   }
@@ -110,7 +110,7 @@ export const getBookById = async (req, res) => {
     if (!book) {
       return res.status(404).json({
         success: false,
-        message: 'ספר לא נמצא'
+        message: '\u200Fספר לא נמצא\u200F'
       });
     }
 
@@ -122,7 +122,7 @@ export const getBookById = async (req, res) => {
     console.error('Get book by ID error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בטעינת פרטי הספר',
+      message: '\u200Fשגיאה בטעינת פרטי הספר\u200F',
       error: error.message
     });
   }
@@ -151,7 +151,7 @@ export const getCategories = async (req, res) => {
     console.error('Get categories error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בטעינת רשימת הקטגוריות',
+      message: '\u200Fשגיאה בטעינת רשימת הקטגוריות\u200F',
       error: error.message
     });
   }
@@ -178,7 +178,7 @@ export const createBook = async (req, res) => {
       if (existingBook) {
         return res.status(400).json({
           success: false,
-          message: 'ספר עם ISBN זה כבר קיים במערכת'
+          message: '\u200Fספר עם ISBN זה כבר קיים במערכת\u200F'
         });
       }
     }
@@ -209,14 +209,14 @@ export const createBook = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'הספר נוסף בהצלחה',
+      message: '\u200Fהספר נוסף בהצלחה\u200F',
       data: { book: createdBook }
     });
   } catch (error) {
     console.error('Create book error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בהוספת ספר',
+      message: '\u200Fשגיאה בהוספת ספר\u200F',
       error: error.message
     });
   }
@@ -243,7 +243,7 @@ export const updateBook = async (req, res) => {
     if (!book) {
       return res.status(404).json({
         success: false,
-        message: 'ספר לא נמצא'
+        message: '\u200Fספר לא נמצא\u200F'
       });
     }
 
@@ -253,7 +253,7 @@ export const updateBook = async (req, res) => {
       if (existingBook) {
         return res.status(400).json({
           success: false,
-          message: 'ספר עם ISBN זה כבר קיים במערכת'
+          message: '\u200Fספר עם ISBN זה כבר קיים במערכת\u200F'
         });
       }
     }
@@ -268,7 +268,7 @@ export const updateBook = async (req, res) => {
       if (newQuantityAvailable < 0) {
         return res.status(400).json({
           success: false,
-          message: 'לא ניתן להפחית את הכמות מתחת למספר העותקים המושאלים'
+          message: '\u200Fלא ניתן להפחית את הכמות מתחת למספר העותקים המושאלים\u200F'
         });
       }
     }
@@ -298,14 +298,14 @@ export const updateBook = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'הספר עודכן בהצלחה',
+      message: '\u200Fהספר עודכן בהצלחה\u200F',
       data: { book: updatedBook }
     });
   } catch (error) {
     console.error('Update book error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בעדכון ספר',
+      message: '\u200Fשגיאה בעדכון ספר\u200F',
       error: error.message
     });
   }
@@ -323,7 +323,7 @@ export const deleteBook = async (req, res) => {
     if (!book) {
       return res.status(404).json({
         success: false,
-        message: 'ספר לא נמצא'
+        message: '\u200Fספר לא נמצא\u200F'
       });
     }
 
@@ -338,7 +338,7 @@ export const deleteBook = async (req, res) => {
     if (activeLoans > 0) {
       return res.status(400).json({
         success: false,
-        message: 'לא ניתן למחוק ספר עם השאלות פעילות'
+        message: '\u200Fלא ניתן למחוק ספר עם השאלות פעילות\u200F'
       });
     }
 
@@ -346,13 +346,13 @@ export const deleteBook = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'הספר נמחק בהצלחה'
+      message: '\u200Fהספר נמחק בהצלחה\u200F'
     });
   } catch (error) {
     console.error('Delete book error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה במחיקת ספר',
+      message: '\u200Fשגיאה במחיקת ספר\u200F',
       error: error.message
     });
   }
@@ -369,7 +369,7 @@ export const addCopiesToBook = async (req, res) => {
     if (!quantity || quantity < 1) {
       return res.status(400).json({
         success: false,
-        message: 'כמות לא תקינה'
+        message: '\u200Fכמות לא תקינה\u200F'
       });
     }
 
@@ -378,7 +378,7 @@ export const addCopiesToBook = async (req, res) => {
     if (!book) {
       return res.status(404).json({
         success: false,
-        message: 'ספר לא נמצא'
+        message: '\u200Fספר לא נמצא\u200F'
       });
     }
 
@@ -393,7 +393,7 @@ export const addCopiesToBook = async (req, res) => {
     console.error('Add copies error:', error);
     res.status(500).json({
       success: false,
-      message: 'שגיאה בהוספת עותקים',
+      message: '\u200Fשגיאה בהוספת עותקים\u200F',
       error: error.message
     });
   }

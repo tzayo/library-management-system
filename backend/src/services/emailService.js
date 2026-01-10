@@ -66,7 +66,7 @@ const sendEmail = async ({ to, subject, html, text }) => {
 // Email templates
 
 export const sendWelcomeEmail = async (user) => {
-  const subject = 'ברוכים הבאים לספריית הקיבוץ';
+  const subject = '\u200Fברוכים הבאים לספריית הקיבוץ\u200F';
 
   const html = `
     <!DOCTYPE html>
@@ -219,7 +219,7 @@ ${book.author ? `- סופר/ת: ${book.author}` : ''}
 };
 
 export const sendBatchReminderEmail = async (user, loans) => {
-  const subject = `תזכורת: החזרת ${loans.length} ספרים`;
+  const subject = `\u200Fתזכורת: החזרת ${loans.length} ספרים\u200F`;
 
   const booksListHtml = loans.map(loan => `
     <li>

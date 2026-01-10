@@ -11,7 +11,7 @@ export const authenticate = async (req, res, next) => {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({
         success: false,
-        message: '\u200Fאין הרשאת גישה. נא להתחבר למערכת.\u200F'
+        message: 'No authorization token provided. Please login.'
       });
     }
 
@@ -26,14 +26,14 @@ export const authenticate = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: '\u200Fמשתמש לא נמצא\u200F'
+        message: 'User not found'
       });
     }
 
     if (!user.isActive) {
       return res.status(403).json({
         success: false,
-        message: '\u200Fחשבון המשתמש אינו פעיל\u200F'
+        message: 'User account is not active'
       });
     }
 
@@ -44,20 +44,20 @@ export const authenticate = async (req, res, next) => {
     if (error.name === 'JsonWebTokenError') {
       return res.status(401).json({
         success: false,
-        message: '\u200Fטוקן לא תקין\u200F'
+        message: 'Invalid token'
       });
     }
 
     if (error.name === 'TokenExpiredError') {
       return res.status(401).json({
         success: false,
-        message: '\u200Fטוקן פג תוקף. נא להתחבר מחדש.\u200F'
+        message: 'Token expired. Please login again.'
       });
     }
 
     return res.status(500).json({
       success: false,
-      message: '\u200Fשגיאת שרת\u200F',
+      message: 'Server error',
       error: error.message
     });
   }
@@ -69,14 +69,14 @@ export const authorize = (...allowedRoles) => {
     if (!req.user) {
       return res.status(401).json({
         success: false,
-        message: '\u200Fנא להתחבר למערכת\u200F'
+        message: 'Please login to the system'
       });
     }
 
     if (!allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        message: '\u200Fאין לך הרשאה לבצע פעולה זו\u200F',
+        message: 'You do not have permission to perform this action',
         requiredRoles: allowedRoles,
         yourRole: req.user.role
       });

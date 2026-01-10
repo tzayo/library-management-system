@@ -114,7 +114,7 @@ Book.prototype.addCopies = async function(quantity) {
 
 Book.prototype.borrowCopy = async function() {
   if (this.quantityAvailable <= 0) {
-    throw new Error('\u200Fאין עותקים זמינים של ספר זה\u200F');
+    throw new Error('No copies available for this book');
   }
   this.quantityAvailable -= 1;
   await this.save();

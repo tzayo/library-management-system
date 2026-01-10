@@ -9,6 +9,7 @@ import { config } from './config/config.js';
 import { connectDB } from './config/database.js';
 import { initCronJobs } from './services/cronService.js';
 import { testEmailConnection } from './services/emailService.js';
+import { initDefaultAdmin } from './utils/init-admin.js';
 
 // Import routes
 import authRoutes from './routes/authRoutes.js';
@@ -122,6 +123,9 @@ const startServer = async () => {
       console.error('❌ Failed to connect to database. Exiting...');
       process.exit(1);
     }
+
+    // Initialize default admin user if none exists
+    await initDefaultAdmin();
 
     // Test email connection (optional - won't fail if email not configured)
     if (config.email.enabled) {

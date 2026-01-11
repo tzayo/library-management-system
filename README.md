@@ -54,6 +54,8 @@
 
 ## 📚 Documentation
 
+- 🚀 [**Installation Guide**](INSTALL.md) - **START HERE!** Complete step-by-step deployment guide
+- 🧪 [Deployment Testing Guide](DEPLOYMENT-TEST.md) - Verify your installation is working correctly
 - 📖 [Complete Reinstall Guide](REINSTALL-GUIDE.md) - Clean install and reset procedures
 - 🗄️ [Database Guide](DATABASE-GUIDE.md) - Database inspection, backup, and management
 - 🔧 [Troubleshooting Guide](TROUBLESHOOTING.md) - Common issues and solutions
@@ -124,7 +126,7 @@ docker exec -it library_backend npm run create-admin -- --email=admin@library.co
 ```
 
 5. **גישה למערכת:**
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:3001
 - Backend API: http://localhost:5000
 - Health Check: http://localhost:5000/health
 

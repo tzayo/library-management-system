@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { BookOpen, Mail, Lock, LogIn } from 'lucide-react';
 
@@ -12,8 +12,7 @@ const LoginPage = () => {
 
   // Redirect if already logged in
   if (isAuthenticated) {
-    navigate('/dashboard');
-    return null;
+    return <Navigate to="/dashboard" replace />;
   }
 
   const handleSubmit = async (e) => {

@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { BookOpen, Mail, Lock, User, Phone, UserPlus } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -17,8 +18,7 @@ const RegisterPage = () => {
 
   // Redirect if already logged in
   if (isAuthenticated) {
-    navigate('/dashboard');
-    return null;
+    return <Navigate to="/dashboard" replace />;
   }
 
   const handleChange = (e) => {

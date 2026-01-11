@@ -54,13 +54,8 @@ const Book = sequelize.define('Book', {
     allowNull: false,
     defaultValue: 1,
     validate: {
-      min: {
-        args: 0,
-        msg: '\u200Fכמות כוללת לא יכולה להיות שלילית\u200F'
-      },
-      isInt: {
-        msg: '\u200Fכמות כוללת חייבת להיות מספר שלם\u200F'
-      }
+      min: 0,
+      isInt: true
     }
   },
   quantityAvailable: {
@@ -68,13 +63,8 @@ const Book = sequelize.define('Book', {
     allowNull: false,
     defaultValue: 1,
     validate: {
-      min: {
-        args: 0,
-        msg: '\u200Fכמות זמינה לא יכולה להיות שלילית\u200F'
-      },
-      isInt: {
-        msg: '\u200Fכמות זמינה חייבת להיות מספר שלם\u200F'
-      }
+      min: 0,
+      isInt: true
     }
   },
   addedById: {

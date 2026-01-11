@@ -4,7 +4,7 @@
 # Make sure you're logged in as an editor or admin user
 
 # Set your API endpoint
-API_URL="http://localhost:3000/api/books"
+API_URL="http://localhost:5000/api/books"
 
 # Get your authentication token
 # You need to login first and get the token

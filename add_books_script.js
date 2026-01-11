@@ -8,7 +8,7 @@ const fs = require('fs');
 
 // Configuration
 const API_HOST = 'localhost';
-const API_PORT = 3000;
+const API_PORT = 5000;
 const API_PATH = '/api/books';
 
 // Get token from command line argument

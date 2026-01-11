@@ -7,6 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -18,11 +19,14 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     const result = await login(email, password);
 
     if (result.success) {
       navigate('/dashboard');
+    } else {
+      setError(result.error || 'שגיאה בהתחברות');
     }
 
     setLoading(false);
@@ -43,6 +47,13 @@ const LoginPage = () => {
         {/* Login Form */}
         <div className="bg-white rounded-lg shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">

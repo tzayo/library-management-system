@@ -30,7 +30,8 @@ api.interceptors.response.use(
       // Token expired or invalid
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      // Don't hard redirect here - let AuthContext handle navigation
+      // This prevents race conditions during login flow
     }
     return Promise.reject(error);
   }

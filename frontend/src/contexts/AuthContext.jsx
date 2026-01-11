@@ -20,21 +20,28 @@ export const AuthProvider = ({ children }) => {
   // Load user on mount
   useEffect(() => {
     const loadUser = async () => {
-      if (token) {
+      if (token && !user) {
+        // Only fetch user if we have a token but no user data
         try {
           const response = await authAPI.getMe();
           setUser(response.data.data.user);
         } catch (error) {
           console.error('Failed to load user:', error);
-          localStorage.removeItem('token');
-          setToken(null);
+          // Only clear token if it's actually invalid (401), not network errors
+          if (error.response?.status === 401) {
+            localStorage.removeItem('token');
+            setToken(null);
+          }
         }
+      } else if (!token) {
+        // Clear user if no token
+        setUser(null);
       }
       setLoading(false);
     };
 
     loadUser();
-  }, [token]);
+  }, [token, user]);
 
   // Login function
   const login = async (email, password) => {
